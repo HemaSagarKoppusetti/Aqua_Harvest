@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 199 89% 48%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 199 89% 48%;
+
+    --radius: 0.5rem;
+
+    /* AquaHarvest custom properties */
+    --water-blue: 199 89% 48%;
+    --earth-green: 84 81% 44%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 199 89% 48%;
+    --primary-foreground: 222.2 84% 4.9%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 199 89% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-secondary;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary;
+  }
+}
+
+@layer components {
+  /* Water ripple effect */
+  .water-ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .water-ripple::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(14, 165, 233, 0.3);
+    transform: translate(-50%, -50%);
+    animation: ripple 1.5s infinite;
+  }
+  
+  @keyframes ripple {
+    0% {
+      width: 0;
+      height: 0;
+      opacity: 1;
+    }
+    100% {
+      width: 200px;
+      height: 200px;
+      opacity: 0;
+    }
+  }
+  
+  /* Floating animation for cards */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-aqua-blue-600 to-earth-green-600 bg-clip-text text-transparent;
+  }
+  
+  /* Glass morphism effect */
+  .glass {
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(209, 213, 219, 0.3);
+  }
+  
+  /* Shimmer loading effect */
+  .shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .container-fluid {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Custom color utilities */
+  .text-aqua-blue-400 { color: rgb(56 189 248); }
+  .text-aqua-blue-500 { color: rgb(14 165 233); }
+  .text-aqua-blue-600 { color: rgb(2 132 199); }
+  .bg-aqua-blue-50 { background-color: rgb(240 249 255); }
+  .bg-aqua-blue-500 { background-color: rgb(14 165 233); }
+  .bg-aqua-blue-600 { background-color: rgb(2 132 199); }
+  .from-aqua-blue-500 { --tw-gradient-from: rgb(14 165 233); }
+  .from-aqua-blue-600 { --tw-gradient-from: rgb(2 132 199); }
+  .hover\:from-aqua-blue-600:hover { --tw-gradient-from: rgb(2 132 199); }
+  
+  .text-earth-green-500 { color: rgb(34 197 94); }
+  .text-earth-green-600 { color: rgb(22 163 74); }
+  .bg-earth-green-50 { background-color: rgb(240 253 244); }
+  .bg-earth-green-500 { background-color: rgb(34 197 94); }
+  .bg-earth-green-600 { background-color: rgb(22 163 74); }
+  .to-earth-green-500 { --tw-gradient-to: rgb(34 197 94); }
+  .to-earth-green-600 { --tw-gradient-to: rgb(22 163 74); }
+  .hover\:to-earth-green-600:hover { --tw-gradient-to: rgb(22 163 74); }
+  
+  /* Animation classes */
+  .animate-water-drop {
+    animation: water-drop 2s ease-in-out infinite;
+  }
+  
+  @keyframes water-drop {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+}

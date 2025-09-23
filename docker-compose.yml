@@ -1,0 +1,174 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database with PostGIS
+  postgres:
+    image: postgis/postgis:15-3.3
+    container_name: aquaharvest-postgres
+    environment:
+      POSTGRES_DB: aquaharvest
+      POSTGRES_USER: aquaharvest_user
+      POSTGRES_PASSWORD: aquaharvest_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/database-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    networks:
+      - aquaharvest-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aquaharvest_user -d aquaharvest"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: aquaharvest-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - aquaharvest-network
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # API Gateway (GraphQL)
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile
+    container_name: aquaharvest-gateway
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+      - POSTGRES_URL=postgresql://aquaharvest_user:aquaharvest_password@postgres:5432/aquaharvest
+      - REDIS_URL=redis://redis:6379
+      - CORS_ORIGIN=http://localhost:3000
+      - JWT_SECRET=your-jwt-secret-key-here
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - aquaharvest-network
+    volumes:
+      - ./backend/api-gateway:/app
+      - /app/node_modules
+    command: npm run dev
+
+  # Assessment Service
+  assessment-service:
+    build:
+      context: ./backend/assessment-service
+      dockerfile: Dockerfile
+    container_name: aquaharvest-assessment
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=development
+      - PORT=5001
+      - POSTGRES_URL=postgresql://aquaharvest_user:aquaharvest_password@postgres:5432/aquaharvest
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - aquaharvest-network
+    volumes:
+      - ./backend/assessment-service:/app
+      - /app/node_modules
+    command: npm run dev
+
+  # ML Service (Python FastAPI)
+  ml-service:
+    build:
+      context: ./backend/ml-service
+      dockerfile: Dockerfile
+    container_name: aquaharvest-ml
+    ports:
+      - "5000:5000"
+    environment:
+      - PYTHONPATH=/app
+      - POSTGRES_URL=postgresql://aquaharvest_user:aquaharvest_password@postgres:5432/aquaharvest
+      - REDIS_URL=redis://redis:6379
+      - GOOGLE_EARTH_ENGINE_KEY=/app/secrets/ee-key.json
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - aquaharvest-network
+    volumes:
+      - ./backend/ml-service:/app
+      - ./secrets:/app/secrets
+    command: uvicorn main:app --host 0.0.0.0 --port 5000 --reload
+
+  # GIS Service
+  gis-service:
+    build:
+      context: ./backend/gis-service
+      dockerfile: Dockerfile
+    container_name: aquaharvest-gis
+    ports:
+      - "5002:5002"
+    environment:
+      - NODE_ENV=development
+      - PORT=5002
+      - POSTGRES_URL=postgresql://aquaharvest_user:aquaharvest_password@postgres:5432/aquaharvest
+      - MAPBOX_ACCESS_TOKEN=your-mapbox-token
+      - GOOGLE_MAPS_API_KEY=your-google-maps-key
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - aquaharvest-network
+    volumes:
+      - ./backend/gis-service:/app
+      - /app/node_modules
+    command: npm run dev
+
+  # Frontend (Next.js)
+  frontend:
+    build:
+      context: ./frontend/web
+      dockerfile: Dockerfile
+    container_name: aquaharvest-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:4000
+      - NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
+    depends_on:
+      - api-gateway
+    networks:
+      - aquaharvest-network
+    volumes:
+      - ./frontend/web:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  aquaharvest-network:
+    driver: bridge

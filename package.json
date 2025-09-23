@@ -1,0 +1,64 @@
+{
+  "name": "aquaharvest",
+  "version": "1.0.0",
+  "description": "AI-Powered Rainwater Harvesting Assistant for Smart India Hackathon",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install && cd frontend/web && npm install && cd ../../backend/api-gateway && npm install && cd ../assessment-service && npm install && cd ../gis-service && npm install && cd ../../backend/ml-service && pip install -r requirements.txt",
+    "dev:all": "concurrently \"npm run dev:web\" \"npm run dev:gateway\" \"npm run dev:assessment\" \"npm run dev:ml\" \"npm run dev:gis\"",
+    "dev:web": "cd frontend/web && npm run dev",
+    "dev:mobile": "cd frontend/mobile && flutter run -d web-server --web-port=3001",
+    "dev:gateway": "cd backend/api-gateway && npm run dev",
+    "dev:assessment": "cd backend/assessment-service && npm run dev", 
+    "dev:ml": "cd backend/ml-service && python main.py",
+    "dev:gis": "cd backend/gis-service && npm run dev",
+    "build": "npm run build:web && npm run build:gateway && npm run build:assessment && npm run build:gis",
+    "build:web": "cd frontend/web && npm run build",
+    "build:gateway": "cd backend/api-gateway && npm run build",
+    "build:assessment": "cd backend/assessment-service && npm run build",
+    "build:gis": "cd backend/gis-service && npm run build",
+    "test": "npm run test:frontend && npm run test:backend && npm run test:ml",
+    "test:frontend": "cd frontend/web && npm test",
+    "test:backend": "cd backend/api-gateway && npm test && cd ../assessment-service && npm test",
+    "test:ml": "cd backend/ml-service && python -m pytest",
+    "test:e2e": "cd frontend/web && npm run test:e2e",
+    "test:load": "artillery run scripts/load-test.yml",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "db:setup": "node scripts/setup-database.js",
+    "db:migrate": "node scripts/run-migrations.js", 
+    "db:seed": "node scripts/seed-data.js",
+    "db:reset": "node scripts/reset-database.js",
+    "ml:update-rainfall": "python ml-models/rainfall-prediction/train.py",
+    "data:import-weather": "node scripts/import-weather-data.js",
+    "data:update-groundwater": "node scripts/update-groundwater.js",
+    "data:process-imagery": "python scripts/process-satellite-data.py",
+    "reports:generate": "node scripts/generate-reports.js",
+    "deploy:dev": "node scripts/deploy-dev.js",
+    "deploy:staging": "node scripts/deploy-staging.js", 
+    "deploy:prod": "node scripts/deploy-prod.js"
+  },
+  "keywords": [
+    "rainwater-harvesting",
+    "ai",
+    "machine-learning",
+    "gis",
+    "smart-india-hackathon",
+    "water-conservation"
+  ],
+  "author": "AquaHarvest Team",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "artillery": "^2.0.3",
+    "docker-compose": "^0.24.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

@@ -1,0 +1,280 @@
+.ar-visualization-container {
+  position: relative;
+  width: 100%;
+  background: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ar-canvas-container {
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px 8px 0 0;
+}
+
+.ar-canvas-container canvas {
+  display: block;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Loading overlay */
+.ar-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.ar-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: ar-spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes ar-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.ar-loading-overlay p {
+  color: #333;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Error overlay */
+.ar-error-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(220, 53, 69, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.ar-error-message {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 300px;
+  border-left: 4px solid #dc3545;
+}
+
+.ar-error-message h3 {
+  color: #dc3545;
+  margin: 0 0 12px 0;
+  font-size: 18px;
+}
+
+.ar-error-message p {
+  color: #333;
+  margin: 0 0 8px 0;
+  line-height: 1.5;
+}
+
+.ar-support-info {
+  color: #6c757d !important;
+  font-size: 14px !important;
+}
+
+/* Info banner */
+.ar-info-banner {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  color: #856404;
+  padding: 12px 16px;
+  text-align: center;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  border-radius: 6px;
+  z-index: 5;
+  font-size: 14px;
+}
+
+.ar-info-banner p {
+  margin: 0;
+}
+
+/* Controls section */
+.ar-controls {
+  background: white;
+  padding: 16px;
+  border-top: 1px solid #e9ecef;
+}
+
+.ar-info h4 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.assessment-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.assessment-info p {
+  margin: 0;
+  padding: 8px 12px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border-left: 3px solid #007bff;
+  font-size: 14px;
+  color: #333;
+}
+
+/* AR Button Styling */
+button[style*="background-color: rgba(0,0,0,0.1)"] {
+  background: linear-gradient(135deg, #007bff, #0056b3) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 12px 24px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: white !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3) !important;
+  position: absolute !important;
+  bottom: 16px !important;
+  right: 16px !important;
+  z-index: 20 !important;
+}
+
+button[style*="background-color: rgba(0,0,0,0.1)"]:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4) !important;
+}
+
+button[style*="background-color: rgba(0,0,0,0.1)"]:active {
+  transform: translateY(0px) !important;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .ar-canvas-container {
+    height: 300px !important;
+  }
+  
+  .assessment-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .ar-info-banner {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  button[style*="background-color: rgba(0,0,0,0.1)"] {
+    bottom: 12px !important;
+    right: 12px !important;
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ar-controls {
+    padding: 12px;
+  }
+  
+  .ar-error-message {
+    padding: 16px;
+    margin: 16px;
+  }
+  
+  .assessment-info p {
+    font-size: 13px;
+  }
+}
+
+/* Animation classes */
+.ar-fade-in {
+  animation: arFadeIn 0.5s ease-in-out;
+}
+
+@keyframes arFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ar-scale-in {
+  animation: arScaleIn 0.3s ease-out;
+}
+
+@keyframes arScaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* WebXR specific styles */
+.ar-visualization-container:fullscreen {
+  background: transparent;
+}
+
+.ar-visualization-container:fullscreen .ar-canvas-container {
+  height: 100vh !important;
+  border-radius: 0;
+}
+
+.ar-visualization-container:fullscreen .ar-controls {
+  display: none;
+}
+
+.ar-visualization-container:fullscreen .ar-info-banner {
+  display: none;
+}
+
+/* Accessibility improvements */
+.ar-loading-overlay:focus,
+.ar-error-overlay:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ar-loading-spinner,
+  .ar-fade-in,
+  .ar-scale-in {
+    animation: none;
+  }
+  
+  button[style*="background-color: rgba(0,0,0,0.1)"] {
+    transition: none !important;
+  }
+}
