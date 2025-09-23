@@ -1,9 +1,7 @@
 # 🌊 AquaHarvest - AI-Powered Rainwater Harvesting Assistant
-
-> **Smart India Hackathon 2024 Solution**  
+ 
 > Transforming India's water conservation efforts through AI-powered rooftop rainwater harvesting assessment
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
 [![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://python.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black.svg)](https://nextjs.org/)
@@ -236,15 +234,6 @@ POST /api/v1/calculate
 - **ISO 27001** security standards
 - **WCAG 2.1** accessibility compliance
 
-## 🎮 Demo Features
-
-### Live Demo Flow (SIH Presentation)
-1. **Problem Visualization** - Water crisis statistics
-2. **User Journey** - 3-step assessment process  
-3. **AI Magic** - Live roof detection from satellite
-4. **AR Wow Factor** - 3D structure visualization
-5. **Impact Dashboard** - National scale potential
-6. **Scalability Proof** - Load testing metrics
 
 ### AR Visualization
 - Point camera at roof/ground
@@ -267,39 +256,19 @@ POST /api/v1/calculate
 - **Money Saved**: Household savings calculator
 - **Job Creation**: Local contractor employment
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Team Roles
-1. **Full-Stack Developer** (Team Lead)
-2. **ML/AI Engineer** (Computer Vision)
-3. **Mobile Developer** (Flutter/React Native)
-4. **GIS Specialist** (Mapping & Spatial Analysis)
-5. **UI/UX Designer** (User Experience)
-6. **Domain Expert** (Water Conservation)
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- **Smart India Hackathon 2024** for the opportunity
+- **Smart India Hackathon 2025** for the opportunity
 - **Central Ground Water Board (CGWB)** for groundwater data
 - **India Meteorological Department (IMD)** for weather data
 - **Google Earth Engine** for satellite imagery
 - **Open Source Community** for amazing tools and libraries
 
-## 📞 Contact
 
-**Team AquaHarvest**
-- Email: team@aquaharvest.in
-- Website: https://aquaharvest.in
-- GitHub: https://github.com/your-team/aquaharvest
 
 ---
 
 **Built with ❤️ for India's water security**
 
-*"Every year, India receives 4,000 BCM of rainfall, but we capture less than 8%. Our solution can help capture 20% just from rooftops!"*
+*"Every year, India receives 8,000 BCM of rainfall, but we capture less than 8%. Our solution can help capture 20% just from rooftops!"*
